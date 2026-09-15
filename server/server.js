@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
+import "dotenv/config";
 import cookieParser from "cookie-parser";
 
 
@@ -12,7 +13,7 @@ import jobRouter from "./routes/job.routes.js";
 import applicationRouter from "./routes/application.routes.js";
 
 
-dotenv.config();
+// dotenv.config();
 
 const app = express();
 
