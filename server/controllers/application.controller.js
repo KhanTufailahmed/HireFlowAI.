@@ -4,6 +4,8 @@ import uploadFile from "../utils/uploadFile.js";
 import screenResume from "../utils/screenResume.js";
 import Assessment from "../models/assessment.model.js";
 import generateAssessment from "../utils/generateAssessment.js";
+import Interview from "../models/interview.model.js";
+import sendInterviewEmail from "../utils/sendInterviewEmail.js";
 
 // export const applyJob = async (req, res) => {
 //   try {
@@ -287,6 +289,66 @@ export const getApplicationDetails = async (req, res) => {
 };
 
 
+// export const selectCandidate = async (req, res) => {
+//   try {
+//     if (req.role !== "admin") {
+//       return res.status(403).json({
+//         message: "Only admin can select candidates",
+//         success: false,
+//       });
+//     }
+
+//     const applicationId = req.params.applicationId;
+
+//     const application = await Application.findOne({
+//       _id: applicationId,
+//       status: "admin_review",
+//     });
+
+//     if (!application) {
+//       return res.status(404).json({
+//         message: "Application not found or not available for review",
+//         success: false,
+//       });
+//     }
+//      const interviewDate = new Date();
+
+//     interviewDate.setDate(interviewDate.getDate() + 2);
+//     interviewDate.setHours(11, 0, 0, 0);
+
+//     const interview = await Interview.create({
+//       application: application._id,
+//       candidate: application.candidate._id,
+//       job: application.job._id,
+//       interviewDate: interviewDate,
+//       mode: "online",
+//     });
+
+//     await sendInterviewEmail(
+//       application.candidate,
+//       application.job,
+//       interview
+//     );
+
+//     application.status = "interview_scheduled";
+
+//     await application.save();
+
+//     return res.status(200).json({
+//       message: "Candidate selected and interview scheduled successfully",
+//       application: application,
+//       success: true,
+//     });
+//   } catch (error) {
+//     console.log(error);
+
+//     return res.status(500).json({
+//       message: "Something went wrong",
+//       success: false,
+//     });
+//   }
+// };
+
 export const selectCandidate = async (req, res) => {
   try {
     if (req.role !== "admin") {
@@ -301,7 +363,9 @@ export const selectCandidate = async (req, res) => {
     const application = await Application.findOne({
       _id: applicationId,
       status: "admin_review",
-    });
+    })
+      .populate("candidate", "name email phone")
+      .populate("job");
 
     if (!application) {
       return res.status(404).json({
@@ -310,13 +374,34 @@ export const selectCandidate = async (req, res) => {
       });
     }
 
-    application.status = "finalist";
+    // Automatically schedule interview 2 days later
+    const interviewDate = new Date();
+
+    interviewDate.setDate(interviewDate.getDate() + 2);
+    interviewDate.setHours(11, 0, 0, 0);
+
+    const interview = await Interview.create({
+      application: application._id,
+      candidate: application.candidate._id,
+      job: application.job._id,
+      interviewDate: interviewDate,
+      mode: "online",
+    });
+
+    await sendInterviewEmail(
+      application.candidate,
+      application.job,
+      interview
+    );
+
+    application.status = "interview_scheduled";
 
     await application.save();
 
     return res.status(200).json({
-      message: "Candidate selected successfully",
-      application: application,
+      message:
+        "Candidate selected and interview scheduled successfully",
+      interview: interview,
       success: true,
     });
   } catch (error) {
@@ -328,7 +413,6 @@ export const selectCandidate = async (req, res) => {
     });
   }
 };
-
 
 export const rejectCandidate = async (req, res) => {
   try {
