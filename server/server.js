@@ -9,6 +9,7 @@ import connectDB from "./config/db.js";
 import adminRouter from "./routes/admin.routes.js";
 import candidateRouter from "./routes/candidate.routes.js";
 import jobRouter from "./routes/job.routes.js";
+import applicationRouter from "./routes/application.routes.js";
 
 
 dotenv.config();
@@ -30,6 +31,7 @@ app.use(cookieParser());
 app.use("/api/admin", adminRouter);
 app.use("/api/candidate", candidateRouter);
 app.use("/api/job", jobRouter);
+app.use("/api/application", applicationRouter);
 // Test route
 app.get("/", (req, res) => {
   res.json({
