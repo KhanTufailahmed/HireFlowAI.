@@ -11,6 +11,7 @@ import adminRouter from "./routes/admin.routes.js";
 import candidateRouter from "./routes/candidate.routes.js";
 import jobRouter from "./routes/job.routes.js";
 import applicationRouter from "./routes/application.routes.js";
+import assessmentRouter from "./routes/assessment.routes.js";
 
 
 // dotenv.config();
@@ -33,6 +34,7 @@ app.use("/api/admin", adminRouter);
 app.use("/api/candidate", candidateRouter);
 app.use("/api/job", jobRouter);
 app.use("/api/application", applicationRouter);
+app.use("/api/assessment", assessmentRouter);
 // Test route
 app.get("/", (req, res) => {
   res.json({
