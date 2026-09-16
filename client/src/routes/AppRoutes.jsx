@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
+import Landing from "../pages/Landing.jsx";
 import Login from "../pages/auth/Login.jsx";
 import Register from "../pages/auth/Register.jsx";
 
@@ -14,13 +15,13 @@ import CreateJob from "../pages/admin/CreateJob.jsx";
 import ReviewCandidates from "../pages/admin/ReviewCandidates.jsx";
 import CandidateDetails from "../pages/admin/CandidateDetails.jsx";
 
+import ProtectedRoute from "../components/ProtectedRoute.jsx";
+
 const appRouter = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate to="/login" replace />,
+    element: <Landing />,
   },
-
-  // Auth Routes
   {
     path: "/login",
     element: <Login />,
@@ -30,44 +31,83 @@ const appRouter = createBrowserRouter([
     element: <Register />,
   },
 
-  // Candidate Routes
   {
     path: "/jobs",
-    element: <Jobs />,
+    element: (
+      <ProtectedRoute allowedRoles={["candidate"]}>
+        <Jobs />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/jobs/:jobId",
-    element: <JobDetails />,
+    element: (
+      <ProtectedRoute allowedRoles={["candidate"]}>
+        <JobDetails />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/jobs/:jobId/apply",
-    element: <ApplyJob />,
+    element: (
+      <ProtectedRoute allowedRoles={["candidate"]}>
+        <ApplyJob />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/assessment/:applicationId",
-    element: <Assessment />,
+    element: (
+      <ProtectedRoute allowedRoles={["candidate"]}>
+        <Assessment />
+      </ProtectedRoute>
+    ),
   },
 
-  // Admin Routes
   {
     path: "/admin",
-    element: <Dashboard />,
+    element: (
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/jobs",
-    element: <MyJobs />,
+    element: (
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <MyJobs />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/jobs/create",
-    element: <CreateJob />,
+    element: (
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <CreateJob />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/review",
-    element: <ReviewCandidates />,
+    element: (
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <ReviewCandidates />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/application/:applicationId",
-    element: <CandidateDetails />,
+    element: (
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <CandidateDetails />
+      </ProtectedRoute>
+    ),
+  },
+
+  {
+    path: "*",
+    element: <Navigate to="/" replace />,
   },
 ]);
 

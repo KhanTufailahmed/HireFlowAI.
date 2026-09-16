@@ -1,1 +1,305 @@
 @import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #f8fafc;
+    color: #0f172a;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+:root {
+  --ease-aura: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+@keyframes navbar-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-badge-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-title-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-desc-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-cta-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-trust-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-navbar-reveal {
+  animation: navbar-reveal 550ms var(--ease-aura) forwards;
+}
+
+.animate-hero-badge {
+  animation: hero-badge-reveal 650ms var(--ease-aura) forwards;
+}
+
+.animate-hero-title {
+  animation: hero-title-reveal 800ms var(--ease-aura) 100ms forwards;
+  opacity: 0;
+}
+
+.animate-hero-desc {
+  animation: hero-desc-reveal 750ms var(--ease-aura) 220ms forwards;
+  opacity: 0;
+}
+
+.animate-hero-cta {
+  animation: hero-cta-reveal 700ms var(--ease-aura) 340ms forwards;
+  opacity: 0;
+}
+
+.animate-hero-trust {
+  animation: hero-trust-reveal 650ms var(--ease-aura) 460ms forwards;
+  opacity: 0;
+}
+
+
+@keyframes ambient-orb-1 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(16px, -18px) scale(1.04);
+  }
+  66% {
+    transform: translate(-14px, 12px) scale(0.97);
+  }
+}
+
+@keyframes ambient-orb-2 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(-18px, 14px) scale(0.96);
+  }
+  66% {
+    transform: translate(12px, -12px) scale(1.03);
+  }
+}
+
+.animate-ambient-1 {
+  animation: ambient-orb-1 24s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-ambient-2 {
+  animation: ambient-orb-2 28s ease-in-out infinite;
+  will-change: transform;
+}
+
+
+.reveal-section {
+  opacity: 0;
+  transform: translateY(28px) scale(0.985);
+  transition: opacity 800ms var(--ease-aura), transform 800ms var(--ease-aura);
+  will-change: opacity, transform;
+}
+
+.reveal-section.is-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+
+.stagger-item {
+  opacity: 0;
+  transform: translateY(22px) scale(0.98);
+  transition: opacity 700ms var(--ease-aura), transform 700ms var(--ease-aura);
+  will-change: opacity, transform;
+}
+
+.is-revealed .stagger-item {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+
+.pipeline-arrow {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 600ms var(--ease-aura) 350ms, transform 600ms var(--ease-aura) 350ms;
+}
+
+.is-revealed .pipeline-arrow {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+@media (min-width: 1024px) {
+  .reveal-card-left {
+    opacity: 0;
+    transform: translateX(-16px) scale(0.985);
+    transition: opacity 850ms var(--ease-aura) 60ms, transform 850ms var(--ease-aura) 60ms;
+  }
+  .reveal-card-right {
+    opacity: 0;
+    transform: translateX(16px) scale(0.985);
+    transition: opacity 850ms var(--ease-aura) 180ms, transform 850ms var(--ease-aura) 180ms;
+  }
+  .is-revealed .reveal-card-left,
+  .is-revealed .reveal-card-right {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@media (max-width: 1023px) {
+  .reveal-card-left,
+  .reveal-card-right {
+    opacity: 0;
+    transform: translateY(24px) scale(0.985);
+    transition: opacity 750ms var(--ease-aura), transform 750ms var(--ease-aura);
+  }
+  .is-revealed .reveal-card-left,
+  .is-revealed .reveal-card-right {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+.btn-aura-primary {
+  transition: transform 180ms var(--ease-aura), box-shadow 180ms var(--ease-aura), background-color 180ms ease;
+}
+.btn-aura-primary:hover {
+  transform: scale(1.018);
+  box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.25), 0 8px 10px -6px rgba(79, 70, 229, 0.2);
+}
+.btn-aura-primary:active {
+  transform: scale(0.985);
+}
+
+.btn-aura-secondary {
+  transition: transform 180ms var(--ease-aura), border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+.btn-aura-secondary:hover {
+  transform: scale(1.015);
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.06);
+}
+.btn-aura-secondary:active {
+  transform: scale(0.985);
+}
+
+.card-aura-lift {
+  transition: transform 220ms var(--ease-aura), box-shadow 220ms var(--ease-aura), border-color 220ms ease;
+}
+.card-aura-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px -8px rgba(79, 70, 229, 0.08), 0 4px 8px -4px rgba(15, 23, 42, 0.04);
+  border-color: #c7d2fe;
+}
+
+.icon-aura-hover {
+  transition: transform 280ms var(--ease-aura);
+}
+.group:hover .icon-aura-hover {
+  transform: scale(1.06) rotate(2.5deg);
+}
+
+
+.nav-link-aura {
+  position: relative;
+  transition: color 200ms ease;
+}
+.nav-link-aura::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #4f46e5;
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  transition: transform 220ms var(--ease-aura);
+}
+.nav-link-aura:hover::after {
+  transform: scaleX(1);
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-section,
+  .stagger-item,
+  .pipeline-arrow,
+  .reveal-card-left,
+  .reveal-card-right,
+  .animate-hero-badge,
+  .animate-hero-title,
+  .animate-hero-desc,
+  .animate-hero-cta,
+  .animate-hero-trust,
+  .animate-navbar-reveal,
+  .animate-ambient-1,
+  .animate-ambient-2 {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
